@@ -52,11 +52,14 @@
       margin: 20px 0 10px 0;
       font-size: 1.1rem;
       border-left: 4px solid var(--primary);
+      page-break-after: avoid;
     }
 
     .checklist-item {
       border-bottom: 1px solid var(--border);
       padding: 15px 0;
+      /* Prevents items from getting cut off or dropped at the bottom of a PDF page */
+      page-break-inside: avoid; 
     }
 
     .item-text {
@@ -79,6 +82,7 @@
       border-radius: 6px;
       overflow: hidden;
       width: 120px;
+      flex-shrink: 0;
     }
 
     .radio-toggle input {
@@ -146,8 +150,8 @@
     }
 
     .preview-img {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       object-fit: cover;
       border-radius: 4px;
       border: 1px solid var(--border);
@@ -163,6 +167,7 @@
       bottom: 10px;
       background: var(--card-bg);
       padding: 10px 0;
+      z-index: 100;
     }
 
     .btn {
@@ -180,9 +185,16 @@
     .btn-pdf { background-color: #dc2626; }
     .btn-email { background-color: #2563eb; }
 
-    /* Hide element tweaks for clean PDF layout */
-    .pdf-mode .actions, .pdf-mode .file-input-wrapper {
+    /* PDF Engine Cleanups */
+    .pdf-mode .actions {
       display: none !important;
+    }
+    .pdf-mode .file-input-wrapper {
+      display: none !important;
+    }
+    .pdf-mode .container {
+      box-shadow: none !important;
+      padding: 0 !important;
     }
   </style>
 </head>
@@ -194,7 +206,7 @@
   <form id="mainForm">
     <div class="category-title">Back House Management</div>
     
-    <div class="checklist-item" data-id="BH1">
+    <div class="checklist-item">
       <div class="item-text">1. Items are stacked departments wise</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -205,12 +217,12 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
 
-    <div class="checklist-item" data-id="BH2">
+    <div class="checklist-item">
       <div class="item-text">2. Every shelf has department label to identify the items.</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -221,12 +233,12 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
 
-    <div class="checklist-item" data-id="BH3">
+    <div class="checklist-item">
       <div class="item-text">3. Barcodes or product label is facing the front. If not then paste a barcode on the front.</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -237,12 +249,12 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
 
-    <div class="checklist-item" data-id="BH4">
+    <div class="checklist-item">
       <div class="item-text">4. Keep heavy products at low level for ease of collection and to prevent damage</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -253,12 +265,12 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
 
-    <div class="checklist-item" data-id="BH5">
+    <div class="checklist-item">
       <div class="item-text">5. Stockroom floor is kept clear and no items on floor.</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -269,12 +281,12 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
 
-    <div class="checklist-item" data-id="BH6">
+    <div class="checklist-item">
       <div class="item-text">6. No Trolley found with items</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -285,12 +297,12 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
 
-    <div class="checklist-item" data-id="BH7">
+    <div class="checklist-item">
       <div class="item-text">7. Damage items are kept clearly defined area</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -301,12 +313,12 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
 
-    <div class="checklist-item" data-id="BH8">
+    <div class="checklist-item">
       <div class="item-text">8. No Damage items found with good stock</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -317,12 +329,12 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
 
-    <div class="checklist-item" data-id="BH9">
+    <div class="checklist-item">
       <div class="item-text">9. Non Trading items are kept defined area</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -333,12 +345,12 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
 
-    <div class="checklist-item" data-id="BH10">
+    <div class="checklist-item">
       <div class="item-text">10. No Open pcs found with good stock</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -349,7 +361,7 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
@@ -357,7 +369,7 @@
 
     <div class="category-title">Damage Management</div>
 
-    <div class="checklist-item" data-id="DM1">
+    <div class="checklist-item">
       <div class="item-text">1. Damage items are segregated properly.</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -368,12 +380,12 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
 
-    <div class="checklist-item" data-id="DM2">
+    <div class="checklist-item">
       <div class="item-text">2. Damage segregation bins are available.</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -384,12 +396,12 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
 
-    <div class="checklist-item" data-id="DM3">
+    <div class="checklist-item">
       <div class="item-text">3. Damage stickers are pasted on the items.</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -400,12 +412,12 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
 
-    <div class="checklist-item" data-id="DM4">
+    <div class="checklist-item">
       <div class="item-text">4. No good or repairable pcs found amoung damages</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -416,12 +428,12 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
 
-    <div class="checklist-item" data-id="DM5">
+    <div class="checklist-item">
       <div class="item-text">5. High Value Damage items verified</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -432,7 +444,7 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
@@ -440,7 +452,7 @@
 
     <div class="category-title">Price Revision</div>
 
-    <div class="checklist-item" data-id="PR1">
+    <div class="checklist-item">
       <div class="item-text">1. Old prices have been removed</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -451,12 +463,12 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
 
-    <div class="checklist-item" data-id="PR2">
+    <div class="checklist-item">
       <div class="item-text">2. New Prices have been pasted</div>
       <div class="flex-group">
         <div class="radio-toggle">
@@ -467,7 +479,7 @@
       </div>
       <div class="file-input-wrapper">
         <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" onchange="previewImages(this)">
+        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
       </div>
       <div class="preview-container"></div>
     </div>
@@ -480,10 +492,9 @@
 </div>
 
 <script>
-  // Dynamic Image Preview Engine
   function previewImages(input) {
     const previewContainer = input.parentElement.nextElementSibling;
-    previewContainer.innerHTML = ""; // Clear current preview inside this element
+    previewContainer.innerHTML = ""; 
 
     if (input.files) {
       Array.from(input.files).forEach(file => {
@@ -499,17 +510,17 @@
     }
   }
 
-  // PDF Generation Functionality
   function downloadPDF() {
     const element = document.getElementById('checklist-form');
-    element.classList.add('pdf-mode'); // Temporary clean up elements
+    element.classList.add('pdf-mode'); 
 
     const opt = {
-      margin:       10,
+      margin:       [10, 10, 15, 10], // Added safe margins to avoid cut-offs
       filename:     'Back_House_Management_Report.pdf',
-      image:        { type: 'jpeg', quality: 0.95 },
-      html2canvas:  { scale: 2, useCORS: true },
-      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      image:        { type: 'jpeg', quality: 0.90 },
+      html2canvas:  { scale: 2, useCORS: true, logging: false },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak:    { mode: ['avoid-all', 'css'] } // Forces library to obey page-break rules
     };
 
     html2pdf().set(opt).from(element).save().then(() => {
@@ -517,7 +528,6 @@
     });
   }
 
-  // Email Compilation Functionality
   function sendEmail() {
     const items = document.querySelectorAll('.checklist-item');
     let emailBody = "Back House Management Report\n\n";
@@ -531,12 +541,11 @@
       emailBody += `${taskText}\nStatus: ${status}\nRemarks: ${remarks}\n\n`;
     });
 
-    emailBody += "\n*Note: Please see attached PDF for compiled records and uploaded images.*";
+    emailBody += "\n*Note: Please find the attached PDF configuration for complete records and pictures.*";
 
     const encodedSubject = encodeURIComponent("Back House Management Report");
     const encodedBody = encodeURIComponent(emailBody);
     
-    // Directing to mail client template config
     window.location.href = `mailto:ggodfrey25@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
   }
 </script>
