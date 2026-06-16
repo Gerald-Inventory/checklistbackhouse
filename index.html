@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Back House Management Checklist</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <title>Back House Management Portal</title>
   <style>
     :root {
-      --primary: #2563eb;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text: #1e293b;
-      --border: #e2e8f0;
+      --primary-color: #1e3a8a;
+      --secondary-color: #2563eb;
+      --success-color: #16a34a;
+      --danger-color: #dc2626;
+      --neutral-bg: #f8fafc;
+      --border-color: #cbd5e1;
+      --text-dark: #0f172a;
     }
 
     * {
@@ -22,531 +23,669 @@
     }
 
     body {
-      background-color: var(--bg);
-      color: var(--text);
-      padding: 10px;
-      line-height: 1.5;
+      background-color: var(--neutral-bg);
+      color: var(--text-dark);
+      padding: 12px;
+      font-size: 14px;
     }
 
-    .container {
-      max-width: 600px;
+    .app-container {
+      max-width: 800px;
       margin: 0 auto;
-      background: var(--card-bg);
-      padding: 15px;
+      background: #ffffff;
+      padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
-    h1 {
+    .header-panel {
       text-align: center;
-      margin-bottom: 20px;
-      font-size: 1.5rem;
-      color: var(--primary);
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 3px solid var(--primary-color);
     }
 
-    .category-title {
-      background: #eff6ff;
-      color: var(--primary);
-      padding: 10px;
-      border-radius: 6px;
-      margin: 20px 0 10px 0;
-      font-size: 1.1rem;
-      border-left: 4px solid var(--primary);
-      page-break-after: avoid;
+    .header-panel h1 {
+      color: var(--primary-color);
+      font-size: 1.6rem;
+      margin-bottom: 5px;
     }
 
-    .checklist-item {
-      border-bottom: 1px solid var(--border);
-      padding: 15px 0;
-      /* Prevents items from getting cut off or dropped at the bottom of a PDF page */
-      page-break-inside: avoid; 
-    }
-
-    .item-text {
-      font-weight: 500;
-      margin-bottom: 10px;
-      font-size: 0.95rem;
-    }
-
-    .flex-group {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-      align-items: center;
-    }
-
-    /* Mobile-friendly Segmented Control for Yes/No */
-    .radio-toggle {
-      display: flex;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      overflow: hidden;
-      width: 120px;
-      flex-shrink: 0;
-    }
-
-    .radio-toggle input {
-      display: none;
-    }
-
-    .radio-toggle label {
-      flex: 1;
-      text-align: center;
-      padding: 8px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      background: #f1f5f9;
-      transition: background 0.2s;
-    }
-
-    .radio-toggle input:checked + label.yes {
-      background: #22c55e;
-      color: white;
-    }
-
-    .radio-toggle input:checked + label.no {
-      background: #ef4444;
-      color: white;
-    }
-
-    .observation-input {
-      flex: 1;
-      padding: 8px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.85rem;
-    }
-
-    /* File Input Styling */
-    .file-input-wrapper {
-      position: relative;
-      display: inline-block;
-    }
-
-    .file-label {
-      display: inline-block;
-      background: #e2e8f0;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
-
-    .file-input {
-      position: absolute;
-      left: 0;
-      top: 0;
-      opacity: 0;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-    }
-
-    .preview-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-top: 5px;
-    }
-
-    .preview-img {
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-    }
-
-    /* Action Buttons */
-    .actions {
-      margin-top: 30px;
+    .header-meta {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      position: sticky;
-      bottom: 10px;
-      background: var(--card-bg);
-      padding: 10px 0;
-      z-index: 100;
+      margin-top: 15px;
     }
 
-    .btn {
-      padding: 12px;
+    .meta-input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .category-section {
+      margin-bottom: 30px;
+    }
+
+    .category-header {
+      background: var(--primary-color);
+      color: #ffffff;
+      padding: 10px 14px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      margin-bottom: 15px;
+    }
+
+    .checklist-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 15px;
+    }
+
+    .checklist-table th {
+      background: #f1f5f9;
+      padding: 10px;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .checklist-row {
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .checklist-row:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .cell-item {
+      padding: 12px 10px;
+      width: 45%;
+      font-weight: 500;
+    }
+
+    .cell-actions {
+      padding: 12px 10px;
+      width: 55%;
+    }
+
+    .action-flex {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .control-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    /* Mobile Segmented Radio Control */
+    .toggle-group {
+      display: flex;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      width: 110px;
+      flex-shrink: 0;
+    }
+
+    .toggle-group input {
+      display: none;
+    }
+
+    .toggle-group label {
+      flex: 1;
+      text-align: center;
+      padding: 8px 0;
+      cursor: pointer;
+      font-size: 0.85rem;
+      background: #e2e8f0;
+      font-weight: 600;
+    }
+
+    .toggle-group input:checked + label.lbl-yes {
+      background: var(--success-color);
+      color: #ffffff;
+    }
+
+    .toggle-group input:checked + label.lbl-no {
+      background: var(--danger-color);
+      color: #ffffff;
+    }
+
+    .txt-observation {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+
+    .camera-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-camera {
+      background: #64748b;
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: inline-block;
+      font-weight: 500;
+    }
+
+    .btn-camera input {
+      display: none;
+    }
+
+    .gallery-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .preview-thumbnail {
+      width: 65px;
+      height: 65px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    /* Sticky Bottom Actions Panel */
+    .control-panel {
+      position: sticky;
+      bottom: 0;
+      background: #ffffff;
+      padding: 15px 0;
+      border-top: 1px solid var(--border-color);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      z-index: 1000;
+    }
+
+    .btn-action {
+      padding: 14px;
       border: none;
       border-radius: 8px;
       font-size: 1rem;
-      font-weight: bold;
+      font-weight: 700;
       cursor: pointer;
-      color: white;
+      color: #ffffff;
       text-align: center;
-      text-decoration: none;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    .btn-pdf { background-color: #dc2626; }
-    .btn-email { background-color: #2563eb; }
+    .btn-export-html { background-color: #0284c7; }
+    .btn-dispatch-email { background-color: var(--secondary-color); }
 
-    /* PDF Engine Cleanups */
-    .pdf-mode .actions {
-      display: none !important;
-    }
-    .pdf-mode .file-input-wrapper {
-      display: none !important;
-    }
-    .pdf-mode .container {
-      box-shadow: none !important;
-      padding: 0 !important;
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .app-container {
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+      .control-panel, .btn-camera {
+        display: none !important;
+      }
+      .checklist-row {
+        page-break-inside: avoid !important;
+      }
+      .category-section {
+        page-break-inside: avoid !important;
+      }
+      .preview-thumbnail {
+        width: 110px !important;
+        height: 110px !important;
+      }
     }
   </style>
 </head>
 <body>
 
-<div class="container" id="checklist-form">
-  <h1>Back House Management</h1>
-
-  <form id="mainForm">
-    <div class="category-title">Back House Management</div>
+<div class="app-container">
+  <div class="header-panel">
+    <h1>Back House Operations Management</h1>
+    <p>Audit Compliance & Condition Assessment Tool</p>
     
-    <div class="checklist-item">
-      <div class="item-text">1. Items are stacked departments wise</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="bh1-y" name="bh1" value="Yes"><label for="bh1-y" class="yes">Yes</label>
-          <input type="radio" id="bh1-n" name="bh1" value="No"><label for="bh1-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
+    <div class="header-meta">
+      <input type="text" id="meta-auditor" class="meta-input" placeholder="Auditor/Manager Name">
+      <input type="date" id="meta-date" class="meta-input">
+    </div>
+  </div>
+
+  <form id="auditForm">
+    
+    <div class="category-section">
+      <div class="category-header">1. Back House Management</div>
+      <table class="checklist-table">
+        <tbody>
+          <tr class="checklist-row">
+            <td class="cell-item">1. Items are stacked departments wise</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="bh1_y" name="bh1" value="Yes"><label for="bh1_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="bh1_n" name="bh1" value="No"><label for="bh1_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="checklist-row">
+            <td class="cell-item">2. Every shelf has department label to identify the items.</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="bh2_y" name="bh2" value="Yes"><label for="bh2_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="bh2_n" name="bh2" value="No"><label for="bh2_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="checklist-row">
+            <td class="cell-item">3. Barcodes or product label is facing the front. If not then paste a barcode on the front.</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="bh3_y" name="bh3" value="Yes"><label for="bh3_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="bh3_n" name="bh3" value="No"><label for="bh3_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="checklist-row">
+            <td class="cell-item">4. Keep heavy products at low level for ease of collection and to prevent damage</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="bh4_y" name="bh4" value="Yes"><label for="bh4_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="bh4_n" name="bh4" value="No"><label for="bh4_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="checklist-row">
+            <td class="cell-item">5. Stockroom floor is kept clear and no items on floor.</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="bh5_y" name="bh5" value="Yes"><label for="bh5_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="bh5_n" name="bh5" value="No"><label for="bh5_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="checklist-row">
+            <td class="cell-item">6. No Trolley found with items</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="bh6_y" name="bh6" value="Yes"><label for="bh6_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="bh6_n" name="bh6" value="No"><label for="bh6_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="checklist-row">
+            <td class="cell-item">7. Damage items are kept clearly defined area</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="bh7_y" name="bh7" value="Yes"><label for="bh7_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="bh7_n" name="bh7" value="No"><label for="bh7_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="checklist-row">
+            <td class="cell-item">8. No Damage items found with good stock</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="bh8_y" name="bh8" value="Yes"><label for="bh8_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="bh8_n" name="bh8" value="No"><label for="bh8_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="checklist-row">
+            <td class="cell-item">9. Non Trading items are kept defined area</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="bh9_y" name="bh9" value="Yes"><label for="bh9_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="bh9_n" name="bh9" value="No"><label for="bh9_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="checklist-row">
+            <td class="cell-item">10. No Open pcs found with good stock</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="bh10_y" name="bh10" value="Yes"><label for="bh10_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="bh10_n" name="bh10" value="No"><label for="bh10_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="checklist-item">
-      <div class="item-text">2. Every shelf has department label to identify the items.</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="bh2-y" name="bh2" value="Yes"><label for="bh2-y" class="yes">Yes</label>
-          <input type="radio" id="bh2-n" name="bh2" value="No"><label for="bh2-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
+    <div class="category-section">
+      <div class="category-header">2. Damage Management</div>
+      <table class="checklist-table">
+        <tbody>
+          <tr class="checklist-row">
+            <td class="cell-item">1. Damage items are segregated properly.</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="dm1_y" name="dm1" value="Yes"><label for="dm1_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="dm1_n" name="dm1" value="No"><label for="dm1_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="checklist-row">
+            <td class="cell-item">2. Damage segregation bins are available.</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="dm2_y" name="dm2" value="Yes"><label for="dm2_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="dm2_n" name="dm2" value="No"><label for="dm2_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="checklist-row">
+            <td class="cell-item">3. Damage stickers are pasted on the items.</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="dm3_y" name="dm3" value="Yes"><label for="dm3_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="dm3_n" name="dm3" value="No"><label for="dm3_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="checklist-row">
+            <td class="cell-item">4. No good or repairable pcs found amoung damages</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="dm4_y" name="dm4" value="Yes"><label for="dm4_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="dm4_n" name="dm4" value="No"><label for="dm4_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="checklist-row">
+            <td class="cell-item">5. High Value Damage items verified</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="dm5_y" name="dm5" value="Yes"><label for="dm5_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="dm5_n" name="dm5" value="No"><label for="dm5_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="checklist-item">
-      <div class="item-text">3. Barcodes or product label is facing the front. If not then paste a barcode on the front.</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="bh3-y" name="bh3" value="Yes"><label for="bh3-y" class="yes">Yes</label>
-          <input type="radio" id="bh3-n" name="bh3" value="No"><label for="bh3-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
+    <div class="category-section">
+      <div class="category-header">3. Price Revision</div>
+      <table class="checklist-table">
+        <tbody>
+          <tr class="checklist-row">
+            <td class="cell-item">1. Old prices have been removed</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="pr1_y" name="pr1" value="Yes"><label for="pr1_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="pr1_n" name="pr1" value="No"><label for="pr1_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="checklist-row">
+            <td class="cell-item">2. New Prices have been pasted</td>
+            <td class="cell-actions">
+              <div class="action-flex">
+                <div class="control-row">
+                  <div class="toggle-group">
+                    <input type="radio" id="pr2_y" name="pr2" value="Yes"><label for="pr2_y" class="lbl-yes">Yes</label>
+                    <input type="radio" id="pr2_n" name="pr2" value="No"><label for="pr2_n" class="lbl-no">No</label>
+                  </div>
+                  <input type="text" class="txt-observation" placeholder="Observation / Details">
+                </div>
+                <div class="camera-wrapper">
+                  <label class="btn-camera">📸 Capture Rear Cam<input type="file" accept="image/*" capture="environment" multiple onchange="handleImageAllocation(this)"></label>
+                  <div class="gallery-preview"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="checklist-item">
-      <div class="item-text">4. Keep heavy products at low level for ease of collection and to prevent damage</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="bh4-y" name="bh4" value="Yes"><label for="bh4-y" class="yes">Yes</label>
-          <input type="radio" id="bh4-n" name="bh4" value="No"><label for="bh4-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
-    </div>
-
-    <div class="checklist-item">
-      <div class="item-text">5. Stockroom floor is kept clear and no items on floor.</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="bh5-y" name="bh5" value="Yes"><label for="bh5-y" class="yes">Yes</label>
-          <input type="radio" id="bh5-n" name="bh5" value="No"><label for="bh5-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
-    </div>
-
-    <div class="checklist-item">
-      <div class="item-text">6. No Trolley found with items</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="bh6-y" name="bh6" value="Yes"><label for="bh6-y" class="yes">Yes</label>
-          <input type="radio" id="bh6-n" name="bh6" value="No"><label for="bh6-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
-    </div>
-
-    <div class="checklist-item">
-      <div class="item-text">7. Damage items are kept clearly defined area</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="bh7-y" name="bh7" value="Yes"><label for="bh7-y" class="yes">Yes</label>
-          <input type="radio" id="bh7-n" name="bh7" value="No"><label for="bh7-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
-    </div>
-
-    <div class="checklist-item">
-      <div class="item-text">8. No Damage items found with good stock</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="bh8-y" name="bh8" value="Yes"><label for="bh8-y" class="yes">Yes</label>
-          <input type="radio" id="bh8-n" name="bh8" value="No"><label for="bh8-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
-    </div>
-
-    <div class="checklist-item">
-      <div class="item-text">9. Non Trading items are kept defined area</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="bh9-y" name="bh9" value="Yes"><label for="bh9-y" class="yes">Yes</label>
-          <input type="radio" id="bh9-n" name="bh9" value="No"><label for="bh9-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
-    </div>
-
-    <div class="checklist-item">
-      <div class="item-text">10. No Open pcs found with good stock</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="bh10-y" name="bh10" value="Yes"><label for="bh10-y" class="yes">Yes</label>
-          <input type="radio" id="bh10-n" name="bh10" value="No"><label for="bh10-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
-    </div>
-
-
-    <div class="category-title">Damage Management</div>
-
-    <div class="checklist-item">
-      <div class="item-text">1. Damage items are segregated properly.</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="dm1-y" name="dm1" value="Yes"><label for="dm1-y" class="yes">Yes</label>
-          <input type="radio" id="dm1-n" name="dm1" value="No"><label for="dm1-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
-    </div>
-
-    <div class="checklist-item">
-      <div class="item-text">2. Damage segregation bins are available.</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="dm2-y" name="dm2" value="Yes"><label for="dm2-y" class="yes">Yes</label>
-          <input type="radio" id="dm2-n" name="dm2" value="No"><label for="dm2-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
-    </div>
-
-    <div class="checklist-item">
-      <div class="item-text">3. Damage stickers are pasted on the items.</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="dm3-y" name="dm3" value="Yes"><label for="dm3-y" class="yes">Yes</label>
-          <input type="radio" id="dm3-n" name="dm3" value="No"><label for="dm3-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
-    </div>
-
-    <div class="checklist-item">
-      <div class="item-text">4. No good or repairable pcs found amoung damages</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="dm4-y" name="dm4" value="Yes"><label for="dm4-y" class="yes">Yes</label>
-          <input type="radio" id="dm4-n" name="dm4" value="No"><label for="dm4-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
-    </div>
-
-    <div class="checklist-item">
-      <div class="item-text">5. High Value Damage items verified</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="dm5-y" name="dm5" value="Yes"><label for="dm5-y" class="yes">Yes</label>
-          <input type="radio" id="dm5-n" name="dm5" value="No"><label for="dm5-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
-    </div>
-
-
-    <div class="category-title">Price Revision</div>
-
-    <div class="checklist-item">
-      <div class="item-text">1. Old prices have been removed</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="pr1-y" name="pr1" value="Yes"><label for="pr1-y" class="yes">Yes</label>
-          <input type="radio" id="pr1-n" name="pr1" value="No"><label for="pr1-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
-    </div>
-
-    <div class="checklist-item">
-      <div class="item-text">2. New Prices have been pasted</div>
-      <div class="flex-group">
-        <div class="radio-toggle">
-          <input type="radio" id="pr2-y" name="pr2" value="Yes"><label for="pr2-y" class="yes">Yes</label>
-          <input type="radio" id="pr2-n" name="pr2" value="No"><label for="pr2-n" class="no">No</label>
-        </div>
-        <input type="text" class="observation-input" placeholder="Observation/Remarks">
-      </div>
-      <div class="file-input-wrapper">
-        <span class="file-label">📸 Add Pics</span>
-        <input type="file" class="file-input" multiple accept="image/*" capture="environment" onchange="previewImages(this)">
-      </div>
-      <div class="preview-container"></div>
-    </div>
-
-    <div class="actions">
-      <button type="button" class="btn btn-pdf" onclick="downloadPDF()">Download PDF</button>
-      <button type="button" class="btn btn-email" onclick="sendEmail()">Send Email</button>
+    <div class="control-panel">
+      <button type="button" class="btn-action btn-export-html" onclick="saveCompleteDataSnapshot()">Save HTML Backup</button>
+      <button type="button" class="btn-action btn-dispatch-email" onclick="compileAndDispatchEmail()">Send Email Summary</button>
     </div>
   </form>
 </div>
 
 <script>
-  function previewImages(input) {
-    const previewContainer = input.parentElement.nextElementSibling;
-    previewContainer.innerHTML = ""; 
+  function handleImageAllocation(element) {
+    const previewBox = element.parentElement.nextElementSibling;
+    previewBox.innerHTML = ""; 
 
-    if (input.files) {
-      Array.from(input.files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const img = document.createElement("img");
-          img.src = e.target.result;
-          img.classList.add("preview-img");
-          previewContainer.appendChild(img);
+    if (element.files) {
+      Array.from(element.files).forEach(file => {
+        const fileReader = new FileReader();
+        fileReader.onload = function(event) {
+          const thumbnail = document.createElement("img");
+          thumbnail.src = event.target.result;
+          thumbnail.classList.add("preview-thumbnail");
+          previewBox.appendChild(thumbnail);
         }
-        reader.readAsDataURL(file);
+        fileReader.readAsDataURL(file);
       });
     }
   }
 
-  function downloadPDF() {
-    const element = document.getElementById('checklist-form');
-    element.classList.add('pdf-mode'); 
-
-    const opt = {
-      margin:       [10, 10, 15, 10], // Added safe margins to avoid cut-offs
-      filename:     'Back_House_Management_Report.pdf',
-      image:        { type: 'jpeg', quality: 0.90 },
-      html2canvas:  { scale: 2, useCORS: true, logging: false },
-      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak:    { mode: ['avoid-all', 'css'] } // Forces library to obey page-break rules
-    };
-
-    html2pdf().set(opt).from(element).save().then(() => {
-      element.classList.remove('pdf-mode');
+  function saveCompleteDataSnapshot() {
+    // Lock values into HTML elements structurally before download
+    document.querySelectorAll('input[type="text"]').forEach(input => {
+      input.setAttribute('value', input.value);
     });
+
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+      if (radio.checked) {
+        radio.setAttribute('checked', 'checked');
+      } else {
+        radio.removeAttribute('checked');
+      }
+    });
+
+    const auditorName = document.getElementById('meta-auditor');
+    auditorName.setAttribute('value', auditorName.value);
+    const auditDate = document.getElementById('meta-date');
+    auditDate.setAttribute('value', auditDate.value);
+
+    // Dynamic generation package safely preserved
+    const outputHtml = document.documentElement.outerHTML;
+    const dataBlob = new Blob([outputHtml], { type: "text/html;charset=utf-8" });
+    
+    const downloadAnchor = document.createElement("a");
+    downloadAnchor.href = URL.createObjectURL(dataBlob);
+    downloadAnchor.download = `Audit_Backup_${new Date().toISOString().slice(0,10)}.html`;
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    document.body.removeChild(downloadAnchor);
   }
 
-  function sendEmail() {
-    const items = document.querySelectorAll('.checklist-item');
-    let emailBody = "Back House Management Report\n\n";
+  function compileAndDispatchEmail() {
+    const targetAuditor = document.getElementById('meta-auditor').value || "Not Specified";
+    const targetDate = document.getElementById('meta-date').value || "Not Specified";
     
-    items.forEach(item => {
-      const taskText = item.querySelector('.item-text').innerText;
-      const checkedRadio = item.querySelector('input[type="radio"]:checked');
-      const status = checkedRadio ? checkedRadio.value : "Not Answered";
-      const remarks = item.querySelector('.observation-input').value || "None";
-      
-      emailBody += `${taskText}\nStatus: ${status}\nRemarks: ${remarks}\n\n`;
+    let operationalTextBody = `BACK HOUSE OPERATIONAL PERFORMANCE REPORT\\n`;
+    operationalTextBody += `=========================================\\n`;
+    operationalTextBody += `Auditor: ${targetAuditor}\\n`;
+    operationalTextBody += `Date: ${targetDate}\\n\\n`;
+
+    const descriptiveRows = document.querySelectorAll('.checklist-row');
+    descriptiveRows.forEach((row, sequentialIndex) => {
+      const criteriaHeading = row.querySelector('.cell-item').innerText;
+      const responseSelected = row.querySelector('input[type="radio"]:checked');
+      const completionStatus = responseSelected ? responseSelected.value : "UNANSWERED";
+      const empiricalRemarks = row.querySelector('.txt-observation').value || "None Provided";
+
+      operationalTextBody += `${sequentialIndex + 1}. ${criteriaHeading}\\n`;
+      operationalTextBody += `   Status: [${completionStatus}]\\n`;
+      operationalTextBody += `   Remarks: ${empiricalRemarks}\\n\\n`;
     });
 
-    emailBody += "\n*Note: Please find the attached PDF configuration for complete records and pictures.*";
+    operationalTextBody += `-----------------------------------------\\n`;
+    operationalTextBody += `*System Note: To inspect full photo sequences, please run the downloaded standalone data backup file.*`;
 
-    const encodedSubject = encodeURIComponent("Back House Management Report");
-    const encodedBody = encodeURIComponent(emailBody);
+    const structuredSubject = encodeURIComponent(`Back House Operational Performance Audit - ${targetDate}`);
+    const structuredBody = encodeURIComponent(operationalTextBody);
     
-    window.location.href = `mailto:ggodfrey25@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+    window.location.href = `mailto:ggodfrey25@gmail.com?subject=${structuredSubject}&body=${structuredBody}`;
   }
 </script>
 </body>
