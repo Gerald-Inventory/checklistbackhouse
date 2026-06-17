@@ -10,6 +10,7 @@
       --secondary-color: #2563eb;
       --success-color: #16a34a;
       --danger-color: #dc2626;
+      --excel-color: #15803d;
       --neutral-bg: #f8fafc;
       --border-color: #cbd5e1;
       --text-dark: #0f172a;
@@ -214,12 +215,20 @@
       gap: 12px;
       z-index: 1000;
     }
+    
+    /* Modified layout adjustment to perfectly host 3 action buttons on mobile screens */
+    .control-panel-triple {
+      grid-template-columns: 1fr 1fr;
+    }
+    .full-width-btn {
+      grid-column: span 2;
+    }
 
     .btn-action {
-      padding: 14px;
+      padding: 12px;
       border: none;
       border-radius: 8px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
       color: #ffffff;
@@ -228,6 +237,7 @@
     }
 
     .btn-export-html { background-color: #0284c7; }
+    .btn-export-csv { background-color: var(--excel-color); }
     .btn-dispatch-email { background-color: var(--secondary-color); }
 
     @media print {
@@ -276,11 +286,9 @@
 
   <form id="auditForm">
     
-    <!-- CATEGORY 1: BACK HOUSE MANAGEMENT -->
     <div class="category-section">
       <div class="category-header">1. Back House Management</div>
       
-      <!-- Card 1 -->
       <div class="checklist-card">
         <div class="item-title">1. Items are stacked departments wise</div>
         <div class="field-group">
@@ -298,7 +306,6 @@
         <div class="gallery-preview"></div>
       </div>
 
-      <!-- Card 2 -->
       <div class="checklist-card">
         <div class="item-title">2. Every shelf has department label to identify the items.</div>
         <div class="field-group">
@@ -316,7 +323,6 @@
         <div class="gallery-preview"></div>
       </div>
 
-      <!-- Card 3 -->
       <div class="checklist-card">
         <div class="item-title">3. Barcodes or product label is facing the front. If not then paste a barcode on the front.</div>
         <div class="field-group">
@@ -334,7 +340,6 @@
         <div class="gallery-preview"></div>
       </div>
 
-      <!-- Card 4 -->
       <div class="checklist-card">
         <div class="item-title">4. Keep heavy products at low level for ease of collection and to prevent damage</div>
         <div class="field-group">
@@ -352,7 +357,6 @@
         <div class="gallery-preview"></div>
       </div>
 
-      <!-- Card 5 -->
       <div class="checklist-card">
         <div class="item-title">5. Stockroom floor is kept clear and no items on floor.</div>
         <div class="field-group">
@@ -370,7 +374,6 @@
         <div class="gallery-preview"></div>
       </div>
 
-      <!-- Card 6 -->
       <div class="checklist-card">
         <div class="item-title">6. No Trolley found with items</div>
         <div class="field-group">
@@ -388,7 +391,6 @@
         <div class="gallery-preview"></div>
       </div>
 
-      <!-- Card 7 -->
       <div class="checklist-card">
         <div class="item-title">7. Damage items are kept clearly defined area</div>
         <div class="field-group">
@@ -406,7 +408,6 @@
         <div class="gallery-preview"></div>
       </div>
 
-      <!-- Card 8 -->
       <div class="checklist-card">
         <div class="item-title">8. No Damage items found with good stock</div>
         <div class="field-group">
@@ -424,7 +425,6 @@
         <div class="gallery-preview"></div>
       </div>
 
-      <!-- Card 9 -->
       <div class="checklist-card">
         <div class="item-title">9. Non Trading items are kept defined area</div>
         <div class="field-group">
@@ -442,7 +442,6 @@
         <div class="gallery-preview"></div>
       </div>
 
-      <!-- Card 10 -->
       <div class="checklist-card">
         <div class="item-title">10. No Open pcs found with good stock</div>
         <div class="field-group">
@@ -462,11 +461,9 @@
 
     </div>
 
-    <!-- CATEGORY 2: DAMAGE MANAGEMENT -->
     <div class="category-section">
       <div class="category-header">2. Damage Management</div>
       
-      <!-- Card 1 -->
       <div class="checklist-card">
         <div class="item-title">1. Damage items are segregated properly.</div>
         <div class="field-group">
@@ -484,7 +481,6 @@
         <div class="gallery-preview"></div>
       </div>
 
-      <!-- Card 2 -->
       <div class="checklist-card">
         <div class="item-title">2. Damage segregation bins are available.</div>
         <div class="field-group">
@@ -502,7 +498,6 @@
         <div class="gallery-preview"></div>
       </div>
 
-      <!-- Card 3 -->
       <div class="checklist-card">
         <div class="item-title">3. Damage stickers are pasted on the items.</div>
         <div class="field-group">
@@ -520,7 +515,6 @@
         <div class="gallery-preview"></div>
       </div>
 
-      <!-- Card 4 -->
       <div class="checklist-card">
         <div class="item-title">4. No good or repairable pcs found amoung damages</div>
         <div class="field-group">
@@ -538,7 +532,6 @@
         <div class="gallery-preview"></div>
       </div>
 
-      <!-- Card 5 -->
       <div class="checklist-card">
         <div class="item-title">5. High Value Damage items verified</div>
         <div class="field-group">
@@ -558,11 +551,9 @@
 
     </div>
 
-    <!-- CATEGORY 3: PRICE REVISION -->
     <div class="category-section">
       <div class="category-header">3. Price Revision</div>
       
-      <!-- Card 1 -->
       <div class="checklist-card">
         <div class="item-title">1. Old prices have been removed</div>
         <div class="field-group">
@@ -580,7 +571,6 @@
         <div class="gallery-preview"></div>
       </div>
 
-      <!-- Card 2 -->
       <div class="checklist-card">
         <div class="item-title">2. New Prices have been pasted</div>
         <div class="field-group">
@@ -600,10 +590,10 @@
 
     </div>
 
-    <!-- Bottom Controls Panel -->
-    <div class="control-panel">
+    <div class="control-panel control-panel-triple">
       <button type="button" class="btn-action btn-export-html" onclick="saveCompleteDataSnapshot()">Save HTML Backup</button>
-      <button type="button" class="btn-action btn-dispatch-email" onclick="compileAndDispatchEmail()">Send Email Summary</button>
+      <button type="button" class="btn-action btn-export-csv" onclick="exportToDataCSV()">Export to CSV</button>
+      <button type="button" class="btn-action btn-dispatch-email full-width-btn" onclick="compileAndDispatchEmail()">Send Email Summary</button>
     </div>
   </form>
 </div>
@@ -627,8 +617,45 @@
     }
   }
 
+  function exportToDataCSV() {
+    const auditorName = document.getElementById('meta-auditor').value || "Not Specified";
+    const auditDate = document.getElementById('meta-date').value || "Not Specified";
+    
+    // Header setup with standard formatting escaping logic
+    let csvRows = [];
+    csvRows.push(`"Back House Operational Audit Report",""`);
+    csvRows.push(`"Auditor Name","${auditorName.replace(/"/g, '""')}"`);
+    csvRows.push(`"Audit Date","${auditDate.replace(/"/g, '""')}"`);
+    csvRows.push(`""`); // Empty spacer row
+    csvRows.push(`"Checklist Item Assessment Criteria","Compliance Status (Yes/No)","Observation Details / Remarks"`);
+
+    const structuralCards = document.querySelectorAll('.checklist-card');
+    structuralCards.forEach(card => {
+      const criteriaText = card.querySelector('.item-title').innerText.trim();
+      const selectedOption = card.querySelector('input[type="radio"]:checked');
+      const statusValue = selectedOption ? selectedOption.value : "Unanswered";
+      const remarksValue = card.querySelector('.txt-observation').value.trim() || "No remarks added";
+
+      // Secure escape wrapping to prevent layout parsing syntax disruptions inside Excel
+      const cleanCriteria = `"${criteriaText.replace(/"/g, '""')}"`;
+      const cleanStatus = `"${statusValue.replace(/"/g, '""')}"`;
+      const cleanRemarks = `"${remarksValue.replace(/"/g, '""')}"`;
+
+      csvRows.push(`${cleanCriteria},${cleanStatus},${cleanRemarks}`);
+    });
+
+    const csvContent = "\uFEFF" + csvRows.join("\n"); // Prepend UTF-8 BOM to keep special symbols intact
+    const csvBlob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    
+    const downloadLink = document.createElement("a");
+    downloadLink.href = URL.createObjectURL(csvBlob);
+    downloadLink.download = `BackHouse_Audit_${auditDate.replace(/\//g, '-')}.csv`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  }
+
   function saveCompleteDataSnapshot() {
-    // Burn runtime textarea text states back inside the DOM configuration markup 
     document.querySelectorAll('.txt-observation').forEach(textarea => {
       textarea.innerHTML = textarea.value;
     });
