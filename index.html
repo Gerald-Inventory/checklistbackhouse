@@ -184,19 +184,22 @@
       display: none;
     }
 
+    /* Adjusted for larger media injection displays */
     .gallery-preview {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 10px;
+      gap: 10px;
+      margin-top: 14px;
     }
 
+    /* Significantly larger preview cards */
     .preview-thumbnail {
-      width: 70px;
-      height: 70px;
+      width: 180px;
+      height: 180px;
       object-fit: cover;
-      border-radius: 6px;
+      border-radius: 8px;
       border: 1px solid var(--border-color);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
 
     /* Floating Panel Controls footer */
@@ -248,8 +251,8 @@
         page-break-inside: avoid !important;
       }
       .preview-thumbnail {
-        width: 120px !important;
-        height: 120px !important;
+        width: 220px !important;
+        height: 220px !important;
       }
       .txt-observation {
         height: auto !important;
@@ -273,9 +276,11 @@
 
   <form id="auditForm">
     
+    <!-- CATEGORY 1: BACK HOUSE MANAGEMENT -->
     <div class="category-section">
       <div class="category-header">1. Back House Management</div>
       
+      <!-- Card 1 -->
       <div class="checklist-card">
         <div class="item-title">1. Items are stacked departments wise</div>
         <div class="field-group">
@@ -293,6 +298,7 @@
         <div class="gallery-preview"></div>
       </div>
 
+      <!-- Card 2 -->
       <div class="checklist-card">
         <div class="item-title">2. Every shelf has department label to identify the items.</div>
         <div class="field-group">
@@ -310,6 +316,7 @@
         <div class="gallery-preview"></div>
       </div>
 
+      <!-- Card 3 -->
       <div class="checklist-card">
         <div class="item-title">3. Barcodes or product label is facing the front. If not then paste a barcode on the front.</div>
         <div class="field-group">
@@ -327,6 +334,7 @@
         <div class="gallery-preview"></div>
       </div>
 
+      <!-- Card 4 -->
       <div class="checklist-card">
         <div class="item-title">4. Keep heavy products at low level for ease of collection and to prevent damage</div>
         <div class="field-group">
@@ -344,6 +352,7 @@
         <div class="gallery-preview"></div>
       </div>
 
+      <!-- Card 5 -->
       <div class="checklist-card">
         <div class="item-title">5. Stockroom floor is kept clear and no items on floor.</div>
         <div class="field-group">
@@ -361,6 +370,7 @@
         <div class="gallery-preview"></div>
       </div>
 
+      <!-- Card 6 -->
       <div class="checklist-card">
         <div class="item-title">6. No Trolley found with items</div>
         <div class="field-group">
@@ -378,6 +388,7 @@
         <div class="gallery-preview"></div>
       </div>
 
+      <!-- Card 7 -->
       <div class="checklist-card">
         <div class="item-title">7. Damage items are kept clearly defined area</div>
         <div class="field-group">
@@ -395,6 +406,7 @@
         <div class="gallery-preview"></div>
       </div>
 
+      <!-- Card 8 -->
       <div class="checklist-card">
         <div class="item-title">8. No Damage items found with good stock</div>
         <div class="field-group">
@@ -412,6 +424,7 @@
         <div class="gallery-preview"></div>
       </div>
 
+      <!-- Card 9 -->
       <div class="checklist-card">
         <div class="item-title">9. Non Trading items are kept defined area</div>
         <div class="field-group">
@@ -429,6 +442,7 @@
         <div class="gallery-preview"></div>
       </div>
 
+      <!-- Card 10 -->
       <div class="checklist-card">
         <div class="item-title">10. No Open pcs found with good stock</div>
         <div class="field-group">
@@ -448,9 +462,11 @@
 
     </div>
 
+    <!-- CATEGORY 2: DAMAGE MANAGEMENT -->
     <div class="category-section">
       <div class="category-header">2. Damage Management</div>
       
+      <!-- Card 1 -->
       <div class="checklist-card">
         <div class="item-title">1. Damage items are segregated properly.</div>
         <div class="field-group">
@@ -468,6 +484,7 @@
         <div class="gallery-preview"></div>
       </div>
 
+      <!-- Card 2 -->
       <div class="checklist-card">
         <div class="item-title">2. Damage segregation bins are available.</div>
         <div class="field-group">
@@ -485,6 +502,7 @@
         <div class="gallery-preview"></div>
       </div>
 
+      <!-- Card 3 -->
       <div class="checklist-card">
         <div class="item-title">3. Damage stickers are pasted on the items.</div>
         <div class="field-group">
@@ -502,6 +520,7 @@
         <div class="gallery-preview"></div>
       </div>
 
+      <!-- Card 4 -->
       <div class="checklist-card">
         <div class="item-title">4. No good or repairable pcs found amoung damages</div>
         <div class="field-group">
@@ -519,6 +538,7 @@
         <div class="gallery-preview"></div>
       </div>
 
+      <!-- Card 5 -->
       <div class="checklist-card">
         <div class="item-title">5. High Value Damage items verified</div>
         <div class="field-group">
@@ -538,9 +558,11 @@
 
     </div>
 
+    <!-- CATEGORY 3: PRICE REVISION -->
     <div class="category-section">
       <div class="category-header">3. Price Revision</div>
       
+      <!-- Card 1 -->
       <div class="checklist-card">
         <div class="item-title">1. Old prices have been removed</div>
         <div class="field-group">
@@ -558,6 +580,7 @@
         <div class="gallery-preview"></div>
       </div>
 
+      <!-- Card 2 -->
       <div class="checklist-card">
         <div class="item-title">2. New Prices have been pasted</div>
         <div class="field-group">
@@ -577,6 +600,7 @@
 
     </div>
 
+    <!-- Bottom Controls Panel -->
     <div class="control-panel">
       <button type="button" class="btn-action btn-export-html" onclick="saveCompleteDataSnapshot()">Save HTML Backup</button>
       <button type="button" class="btn-action btn-dispatch-email" onclick="compileAndDispatchEmail()">Send Email Summary</button>
